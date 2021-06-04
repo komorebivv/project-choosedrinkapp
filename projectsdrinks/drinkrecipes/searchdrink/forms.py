@@ -1,16 +1,29 @@
 from django import forms
-from .models import Ingredient, Drink
+from .models import Alcohol, OtherDrink, Fruit, OtherAdd
 
-class IngredientForm(forms.ModelForm):
-    class Meta:
-        model = Ingredient
-        fields=[]
 
-    alcoholchoice = forms.MultipleChoiceField(
-        label = 'Wybierz alkohol',
-        required = False,
+class AlcoholForm(forms.Form):
+    choices = forms.ModelMultipleChoiceField(
+        queryset=Alcohol.objects.all(),
         widget=forms.CheckboxSelectMultiple,
-        # choices = ['alcohol']
-
     )
+
+class OtherDrinkForm(forms.Form):
+    otherdrink = forms.ModelMultipleChoiceField(
+        queryset=OtherDrink.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+    )
+
+class FruitForm(forms.Form):
+    fruit = forms.ModelMultipleChoiceField(
+        queryset=Fruit.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+    )
+
+class OtherAddForm(forms.Form):
+    otheradd = forms.ModelMultipleChoiceField(
+        queryset=OtherAdd.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+    )
+
 

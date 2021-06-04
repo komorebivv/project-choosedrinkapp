@@ -3,11 +3,8 @@
 
 {% block content %}
 
-<form method="post">
-    {{ form }}
-    {{ alcohol }}
-    {% for alco in alcohol %}
-       {{ alcohol }}
-    {% endfor %}
-</form>
+{{ form }}
+<a href="/otherdrink"><button type="button" class="btn btn-dark">Następny krok</button></a>
+
+
 {% endblock %}

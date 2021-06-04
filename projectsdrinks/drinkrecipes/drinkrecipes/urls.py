@@ -21,5 +21,8 @@ from django.contrib import admin
 urlpatterns = [
     path('', include('searchdrink.urls')),
     path('alcohol', include('searchdrink.urls')),
+    path('otherdrink', include('searchdrink.urls')),
+    path('fruit', include('searchdrink.urls')),
+    path('otheradd', include('searchdrink.urls')),
     path('admin/', admin.site.urls),
 ]
