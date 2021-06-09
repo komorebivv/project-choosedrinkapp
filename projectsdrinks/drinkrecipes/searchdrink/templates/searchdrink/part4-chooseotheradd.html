@@ -2,7 +2,9 @@
 {% extends 'searchdrink/base.html' %}
 
 {% block content %}
+<form action="{% url 'searchdrink:otheradd' %}" method="post">
+    {% csrf_token %}
 {{ form }}
-<a href="/results"><button type="button" class="btn btn-dark">Następny krok</button></a>
+<input type="submit" class="btn btn-dark"><a href="/results"></a>
 
 {% endblock %}

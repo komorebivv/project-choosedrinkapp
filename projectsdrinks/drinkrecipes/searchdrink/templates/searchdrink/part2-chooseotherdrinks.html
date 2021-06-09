@@ -2,9 +2,10 @@
 {% extends 'searchdrink/base.html' %}
 
 {% block content %}
-
+<form action="{% url 'searchdrink:otherdrink' %}" method="post">
+    {% csrf_token %}
 {{ form }}
-<a href="/fruit"><button type="button" class="btn btn-dark">Następny krok</button></a>
+<input type="submit" class="btn btn-dark"><a href="/fruit"></a>
 
 
 {% endblock %}

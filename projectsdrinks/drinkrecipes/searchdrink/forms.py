@@ -1,29 +1,41 @@
 from django import forms
-from .models import Alcohol, OtherDrink, Fruit, OtherAdd
+from .models import Alcohol, OtherDrink, Fruit, OtherAdd, Drink
 
 
 class AlcoholForm(forms.Form):
-    choices = forms.ModelMultipleChoiceField(
+    alcoholToChoice = forms.ModelMultipleChoiceField(
         queryset=Alcohol.objects.all(),
         widget=forms.CheckboxSelectMultiple,
     )
 
+
+
 class OtherDrinkForm(forms.Form):
-    otherdrink = forms.ModelMultipleChoiceField(
+    otherdrinkToChoice = forms.ModelMultipleChoiceField(
         queryset=OtherDrink.objects.all(),
         widget=forms.CheckboxSelectMultiple,
     )
 
+    otherdrink_choice = OtherDrink.objects.filter(otherdrink__contains =otherdrinkToChoice)
+
+
 class FruitForm(forms.Form):
-    fruit = forms.ModelMultipleChoiceField(
+    fruitToChoice = forms.ModelMultipleChoiceField(
         queryset=Fruit.objects.all(),
         widget=forms.CheckboxSelectMultiple,
     )
 
+    fruit_choice = Fruit.objects.filter(fruit__contains = fruitToChoice)
+
+
 class OtherAddForm(forms.Form):
-    otheradd = forms.ModelMultipleChoiceField(
+    otheraddToChoice = forms.ModelMultipleChoiceField(
         queryset=OtherAdd.objects.all(),
         widget=forms.CheckboxSelectMultiple,
     )
+
+    otheradd_choice = OtherAdd.objects.filter(otheradd__contains =otheraddToChoice)
+
+
 
 
