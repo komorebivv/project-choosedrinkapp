@@ -4,6 +4,17 @@
 
 {% block content %}
 
-{{ form }}
-{{ bestChoice }}
+
+<style>
+    body {
+    background-image: url({{ bestChoice.photo.url }})
+    }
+</style>
+<h1 class="mainheader">PrepareYourCocktail <i class="fas fa-cocktail mr-2"></i> </h1>
+
+<h3 class='m-5'> Najlepszy drink dla Ciebie to {{ bestChoice.nameDrink }}</h3>
+
+<div class="row">
+<div class="col-6"> <h6>Potrzebujesz dokładnie:</h6> {{ bestChoice.ingredientsProportion }} </div>
+    <div class="col-6"><h6>Sposób przygotowania:</h6>{{ bestChoice.descriptionPreparing }}</div></div>
 {% endblock %}

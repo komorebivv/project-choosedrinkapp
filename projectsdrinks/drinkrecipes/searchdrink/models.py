@@ -1,4 +1,6 @@
 from django.db import models
+from django.utils.safestring import mark_safe
+
 
 class Drink(models.Model):
     nameDrink = models.CharField(max_length=50, verbose_name='Nazwa drinku')
@@ -39,8 +41,14 @@ class Drink(models.Model):
     descriptionPreparing = models.TextField(verbose_name='Opis przygotowania')
     photo = models.ImageField(upload_to='uploads/', default='some photo', verbose_name='Zdjęcie drinka')
 
+
+
     def __str__(self):
         return self.nameDrink
+
+    def save(self, *args, **kwargs):
+        self.ingredientsProportion = mark_safe(self.ingredientsProportion.replace("\n", "<br>"))
+        super(Drink, self).save(*args, **kwargs)
 
 
 

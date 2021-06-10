@@ -72,19 +72,14 @@ def results(request):
 
 
     a = Drink.objects.filter(_alcohol__in=selected_alcohols)
-    print(a)
     b = Drink.objects.filter(_otherdrink__in=selected_otherdrinks)
-    print(b)
     c = Drink.objects.filter(_fruit__in=fruits)
-    print(c)
     d = Drink.objects.filter(_otheradd__in=selected_otheradds)
-    print(d)
 
     result_list = list(chain(a, b, c, d))
     results_dict = {i:result_list.count(i) for i in result_list}
     sorted_results = {k: v for k, v in sorted(results_dict.items(), key=lambda item: item[1], reverse=True)}
-
     namebestChoice = next(iter(sorted_results))
-    bestChoice = Drink.objects.filter(nameDrink__contains=namebestChoice).values('descriptionPreparing')
+    bestChoice = Drink.objects.get(nameDrink__contains=namebestChoice)
 
     return render(request, 'searchdrink/results.html', {'bestChoice': bestChoice})
