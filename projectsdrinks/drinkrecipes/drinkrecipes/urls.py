@@ -26,8 +26,12 @@ urlpatterns = [
     path('fruit', include('searchdrink.urls')),
     path('otheradd', include('searchdrink.urls')),
     path('results', include('searchdrink.urls')),
+    path('result2', include('searchdrink.urls')),
     path('admin/', admin.site.urls),
+
 ]
+
+handler404 = 'searchdrink.views.bad_request'
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

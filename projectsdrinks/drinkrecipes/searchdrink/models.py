@@ -1,5 +1,4 @@
 from django.db import models
-from django.utils.safestring import mark_safe
 
 
 class Drink(models.Model):
@@ -45,10 +44,6 @@ class Drink(models.Model):
 
     def __str__(self):
         return self.nameDrink
-
-    def save(self, *args, **kwargs):
-        self.ingredientsProportion = mark_safe(self.ingredientsProportion.replace("\n", "<br>"))
-        super(Drink, self).save(*args, **kwargs)
 
 
 

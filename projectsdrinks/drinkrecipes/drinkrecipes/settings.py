@@ -7,7 +7,7 @@ SECRET_KEY = 'django-insecure-w(b!ijn!pa1)fe(r+2se%2glx_okn(&99s54@qednj%t12*-ca
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 INSTALLED_APPS = [
     'searchdrink.apps.SearchdrinkConfig',

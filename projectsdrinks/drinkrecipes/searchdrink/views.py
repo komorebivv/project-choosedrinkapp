@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_list_or_404, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from .forms import AlcoholForm, FruitForm, OtherDrinkForm, OtherAddForm
 from .models import Alcohol, OtherDrink, OtherAdd, Fruit, Drink
@@ -70,16 +70,36 @@ def results(request):
     selected_otheradds = OtherAdd.objects.filter(id__in=otheradds)
 
 
-
     a = Drink.objects.filter(_alcohol__in=selected_alcohols)
     b = Drink.objects.filter(_otherdrink__in=selected_otherdrinks)
     c = Drink.objects.filter(_fruit__in=fruits)
     d = Drink.objects.filter(_otheradd__in=selected_otheradds)
 
+    allDrinks = a | b | c | d
+    checking = get_list_or_404(allDrinks)
     result_list = list(chain(a, b, c, d))
     results_dict = {i:result_list.count(i) for i in result_list}
+
+    for key, value in results_dict.items():
+        generalAmount = key._alcohol.count() + key._otherdrink.count() + key._otheradd.count() + key._fruit.count()
+        results_dict[key] = value/generalAmount
+
     sorted_results = {k: v for k, v in sorted(results_dict.items(), key=lambda item: item[1], reverse=True)}
-    namebestChoice = next(iter(sorted_results))
+    print(sorted_results)
+
+    sorted_results_iter = iter(sorted_results)
+
+    namebestChoice = next(sorted_results_iter)
+    namebestChoice_second = next(sorted_results_iter)
     bestChoice = Drink.objects.get(nameDrink__contains=namebestChoice)
+    bestChoice_second = Drink.objects.get(nameDrink__contains=namebestChoice_second)
+    print(bestChoice, bestChoice_second)
 
     return render(request, 'searchdrink/results.html', {'bestChoice': bestChoice})
+
+def result2(request):
+
+    return render(request, 'searchdrink/results2.html'), {'bestChoice_second': bestChoice_second}
+
+def bad_request(request, exception):
+    return render(request, 'searchdrink/404.html', {})

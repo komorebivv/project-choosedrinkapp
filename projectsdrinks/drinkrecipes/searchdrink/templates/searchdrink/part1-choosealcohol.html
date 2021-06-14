@@ -1,7 +1,14 @@
 
 {% extends 'searchdrink/base.html' %}
 
+
 {% block content %}
+<style>
+body{
+     background-image: url(../../static/searchdrink/background-alcohol.jpg);
+     }
+</style>
+
 <h1 class="mainheader mb-5">FindYourCocktail <i class="fas fa-cocktail mr-2"></i> </h1>
 
 <form action="{% url 'searchdrink:alcohol' %}" method="post">
