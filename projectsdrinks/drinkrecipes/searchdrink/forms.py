@@ -23,7 +23,6 @@ class OtherDrinkForm(forms.Form):
 
     )
 
-    otherdrink_choice = OtherDrink.objects.filter(otherdrink__contains =otherdrinkToChoice)
 
 
 class FruitForm(forms.Form):
@@ -34,7 +33,6 @@ class FruitForm(forms.Form):
         label="Teraz pora na owoce:"
     )
 
-    fruit_choice = Fruit.objects.filter(fruit__contains = fruitToChoice)
 
 
 class OtherAddForm(forms.Form):
@@ -46,8 +44,8 @@ class OtherAddForm(forms.Form):
 
     )
 
-    otheradd_choice = OtherAdd.objects.filter(otheradd__contains =otheraddToChoice)
 
 
 
-
+class NameDrinkForm(forms.Form):
+    name_search = forms.CharField(label='',max_length=100)

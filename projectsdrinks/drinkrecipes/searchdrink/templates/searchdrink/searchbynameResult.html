@@ -1,0 +1,26 @@
+
+
+{% extends 'searchdrink/base.html' %}
+
+{% block content %}
+
+
+<style>
+    body {
+    background-image: url({{ finalresult.photo.url }})
+    }
+</style>
+
+
+<h1 class="mainheader">PrepareYourCocktail <i class="fas fa-cocktail mr-2"></i> </h1>
+
+
+<h3 class='m-5'> Dobry wybór! Oto przepis na {{ finalresult.nameDrink }}</h3>
+
+<div class="row">
+<div class="col-6"> <h6>Potrzebujesz dokładnie:</h6> {{ finalresult.ingredientsProportion|linebreaksbr }} </div>
+    <div class="col-6"><h6>Sposób przygotowania:</h6>{{ finalresult.descriptionPreparing|linebreaksbr }}</div></div>
+
+
+
+{% endblock %}

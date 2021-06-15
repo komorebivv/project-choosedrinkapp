@@ -1,0 +1,18 @@
+{% extends 'searchdrink/base.html' %}
+
+{% block content %}
+<style>
+body{
+     background-image: url(../../static/searchdrink/background-searchbyname.jpg);
+     }
+</style>
+
+<h4 class="m-5"> Wpisz nazwę drinka, postaramy się go znaleźć wśród naszych przepisów. </h4>
+
+<form action="{% url 'searchdrink:searchbyname' %}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <br>
+    <input type="submit" class="btn btn-dark m-3" value="Szukaj">
+</form>
+{% endblock %}

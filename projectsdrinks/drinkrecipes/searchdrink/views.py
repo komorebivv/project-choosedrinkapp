@@ -1,8 +1,10 @@
 from django.shortcuts import render, get_list_or_404, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
-from .forms import AlcoholForm, FruitForm, OtherDrinkForm, OtherAddForm
+from .forms import AlcoholForm, FruitForm, OtherDrinkForm, OtherAddForm, NameDrinkForm
 from .models import Alcohol, OtherDrink, OtherAdd, Fruit, Drink
 from itertools import chain
+from django.core import serializers
+import json
 
 
 
@@ -89,17 +91,49 @@ def results(request):
 
     sorted_results_iter = iter(sorted_results)
 
-    namebestChoice = next(sorted_results_iter)
-    namebestChoice_second = next(sorted_results_iter)
-    bestChoice = Drink.objects.get(nameDrink__contains=namebestChoice)
-    bestChoice_second = Drink.objects.get(nameDrink__contains=namebestChoice_second)
-    print(bestChoice, bestChoice_second)
+
+    bestChoice = next(sorted_results_iter)
+    bestChoice_second = next(sorted_results_iter)
+    bestChoice_third = next(sorted_results_iter)
+
 
     return render(request, 'searchdrink/results.html', {'bestChoice': bestChoice})
 
 def result2(request):
 
-    return render(request, 'searchdrink/results2.html'), {'bestChoice_second': bestChoice_second}
+    return render(request, 'searchdrink/results2.html', {'bestChoice_second_json': bestChoice_second_json})
+
+
 
 def bad_request(request, exception):
     return render(request, 'searchdrink/404.html', {})
+
+def searchbyname(request):
+    if request.method == 'POST':
+        form = NameDrinkForm(request.POST)
+        if form.is_valid():
+            name_search = form.cleaned_data['name_search']
+            searchingcocktail = Drink.objects.filter(nameDrink__contains=name_search)
+            searchingcocktail_json = serializers.serialize('json', searchingcocktail)
+            request.session['searchingcocktail_json'] = searchingcocktail_json
+            return HttpResponseRedirect('searchnameresult', searchingcocktail_json, content_type='application/json')
+    else:
+        form = NameDrinkForm()
+
+
+    return render(request, 'searchdrink/searchbyname.html', {'form': form})
+
+
+def searchnameresult(request):
+    searchingcocktail_json = request.session['searchingcocktail_json']
+    searchingcocktail_list = json.loads(searchingcocktail_json)
+    for dicts in searchingcocktail_list:
+        for key, values in dicts.items():
+            for k, v in dicts['fields'].items():
+                finalresult = get_object_or_404(Drink.objects.get(nameDrink__contains=dicts['fields']['nameDrink']))
+
+
+    return render(request, 'searchdrink/searchbynameResult.html', {'finalresult': finalresult})
+
+
+

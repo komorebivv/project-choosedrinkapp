@@ -11,5 +11,7 @@ urlpatterns = [
     path('otheradd', views.part4, name='otheradd'),
     path('results', views.results, name='results'),
     path('result2', views.result2, name='result2'),
+    path('searchbyname', views.searchbyname, name='searchbyname'),
+    path('searchnameresult', views.searchnameresult, name='searchnameresult')
 ]
 

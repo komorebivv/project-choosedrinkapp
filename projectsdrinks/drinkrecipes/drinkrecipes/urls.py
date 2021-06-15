@@ -27,9 +27,12 @@ urlpatterns = [
     path('otheradd', include('searchdrink.urls')),
     path('results', include('searchdrink.urls')),
     path('result2', include('searchdrink.urls')),
+    path('searchbyname', include('searchdrink.urls')),
+    path('searchnameresult', include('searchdrink.urls')),
     path('admin/', admin.site.urls),
 
 ]
+
 
 handler404 = 'searchdrink.views.bad_request'
 

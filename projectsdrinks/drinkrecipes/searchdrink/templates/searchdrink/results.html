@@ -14,11 +14,14 @@
 
 <h1 class="mainheader">PrepareYourCocktail <i class="fas fa-cocktail mr-2"></i> </h1>
 
+
 <h3 class='m-5'> Najlepszy drink dla Ciebie to {{ bestChoice.nameDrink }}</h3>
 
 <div class="row">
 <div class="col-6"> <h6>Potrzebujesz dokładnie:</h6> {{ bestChoice.ingredientsProportion|linebreaksbr }} </div>
     <div class="col-6"><h6>Sposób przygotowania:</h6>{{ bestChoice.descriptionPreparing|linebreaksbr }}</div></div>
+
 <p>Nie jesteś zadowolony z wyniku? Być może spodoba się  <a href="/result2">inna</a> nasza propozycja!</p>
+
 
 {% endblock %}
