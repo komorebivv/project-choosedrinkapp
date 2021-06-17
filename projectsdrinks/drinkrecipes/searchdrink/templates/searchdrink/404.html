@@ -2,6 +2,8 @@
 {% extends 'searchdrink/base.html' %}
 
 {% block content %}
-<p> Musisz zaznaczyć jakiekolwiek składniki, aby otrzymać przepis!</p>
-<a href="/alcohol"><button type="button" class="btn btn-dark">Rozpocznij ponownie</button></a>
+<h4 class="m-3"> Coś poszło nie tak! </h4>
+<p> Nasza wyszukiwarka nie znalazła drinka, którego szukałeś. </p>
+<div class ='mb-2'><a href="/alcohol"><button type="button" class="btn btn-dark">Rozpocznij ponownie szukając po składnikach </button></a></div>
+<div><a href="/searchbyname"><button type="button" class="btn btn-dark">Rozpocznij ponownie szukając po nazwie drinka </button></a></div>
 {% endblock %}

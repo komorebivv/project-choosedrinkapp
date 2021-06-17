@@ -87,21 +87,36 @@ def results(request):
         results_dict[key] = value/generalAmount
 
     sorted_results = {k: v for k, v in sorted(results_dict.items(), key=lambda item: item[1], reverse=True)}
-    print(sorted_results)
-
     sorted_results_iter = iter(sorted_results)
-
-
+    print(sorted_results)
     bestChoice = next(sorted_results_iter)
-    bestChoice_second = next(sorted_results_iter)
-    bestChoice_third = next(sorted_results_iter)
 
+    if len(sorted_results) > 1:
+        bestChoice_second = next(sorted_results_iter)
+        bestChoice_second = Drink.objects.filter(nameDrink__contains=bestChoice_second)
+        bestChoice_second_json = serializers.serialize('json', bestChoice_second)
+        request.session['bestChoice_second_json'] = bestChoice_second_json
+    else:
+        if 'bestChoice_second_json' in request.session:
+            del request.session['bestChoice_second_json']
+
+    if len(sorted_results) > 2:
+        bestChoice_third = next(sorted_results_iter)
 
     return render(request, 'searchdrink/results.html', {'bestChoice': bestChoice})
 
 def result2(request):
+    if request.session.get('bestChoice_second_json', False):
+        bestChoice_second_json = request.session['bestChoice_second_json']
+        bestChoice_second_list = json.loads(bestChoice_second_json)
+        for dicts in bestChoice_second_list:
+            for key, values in dicts.items():
+                for k, v in dicts['fields'].items():
+                    bestChoice_second  = Drink.objects.get(nameDrink__contains=dicts['fields']['nameDrink'])
+    else:
+        return render(request, 'searchdrink/404.html', {})
 
-    return render(request, 'searchdrink/results2.html', {'bestChoice_second_json': bestChoice_second_json})
+    return render(request, 'searchdrink/results2.html', {'bestChoice_second': bestChoice_second})
 
 
 
@@ -113,7 +128,7 @@ def searchbyname(request):
         form = NameDrinkForm(request.POST)
         if form.is_valid():
             name_search = form.cleaned_data['name_search']
-            searchingcocktail = Drink.objects.filter(nameDrink__contains=name_search)
+            searchingcocktail = get_object_or_404(Drink.objects.filter(nameDrink__contains=name_search))
             searchingcocktail_json = serializers.serialize('json', searchingcocktail)
             request.session['searchingcocktail_json'] = searchingcocktail_json
             return HttpResponseRedirect('searchnameresult', searchingcocktail_json, content_type='application/json')
@@ -130,7 +145,8 @@ def searchnameresult(request):
     for dicts in searchingcocktail_list:
         for key, values in dicts.items():
             for k, v in dicts['fields'].items():
-                finalresult = get_object_or_404(Drink.objects.get(nameDrink__contains=dicts['fields']['nameDrink']))
+                finalresult = Drink.objects.get(nameDrink=dicts['fields']['nameDrink'])
+
 
 
     return render(request, 'searchdrink/searchbynameResult.html', {'finalresult': finalresult})
