@@ -17,6 +17,7 @@ def part1(request):
     if request.method == 'POST':
         form = AlcoholForm(request.POST)
         if form.is_valid():
+
             alcohols = request.POST.getlist('alcoholToChoice')
             request.session['alcohols'] = alcohols
             return HttpResponseRedirect('otherdrink')
@@ -128,7 +129,7 @@ def searchbyname(request):
         form = NameDrinkForm(request.POST)
         if form.is_valid():
             name_search = form.cleaned_data['name_search']
-            searchingcocktail = get_object_or_404(Drink.objects.filter(nameDrink__contains=name_search))
+            searchingcocktail = get_list_or_404(Drink.objects.filter(nameDrink__contains=name_search))
             searchingcocktail_json = serializers.serialize('json', searchingcocktail)
             request.session['searchingcocktail_json'] = searchingcocktail_json
             return HttpResponseRedirect('searchnameresult', searchingcocktail_json, content_type='application/json')
