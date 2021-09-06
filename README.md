@@ -1,6 +1,4 @@
-## My own personal project in order to... choosing drink :tropical_drink:
+## My own personal project in order to... choose drink :tropical_drink:
 
-I use here:
-Python & Django
-
+Project made in Django.
 You can see how it looks through Github Pages: https://komorebivv.github.io/project-drinkdatabase/
