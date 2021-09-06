@@ -12,6 +12,6 @@ body{
 <form action="{% url 'searchdrink:fruit' %}" method="post">
     {% csrf_token %}
 {{ form }}
-<input type="submit" class="btn btn-dark"><a href="/otheradd"></a>
+<input type="submit" class="btn btn-dark" value="Wybierz"><a href="/otheradd"></a>
 
 {% endblock %}
